@@ -5,12 +5,18 @@ let inputtext;
 const button = document.querySelector("#search");
 const resultDiv = document.querySelector("#result");
 const more = document.querySelector('#more');
+const paragraph = document.querySelector("paragraph");
 
 async function getImage(text,page_no){
 try{
 const respone = await fetch(`https://api.unsplash.com/search/photos?page=${page_no}&query=${text.value}&client_id=${YOUR_ACCESS_KEY}&`);
 const result = await respone.json();
 console.log(result);
+
+if(result.total == 0){
+  alert("nothing to show")
+  return;
+}
 
 
 result.results.forEach((e)=>{
@@ -27,7 +33,9 @@ result.results.forEach((e)=>{
    resultDiv.append(parentDiv);
 })
 
+
 more.style.display = "block";
+
 }
 catch(error){
     alert("An error occurred in fetching data");
